@@ -1,7 +1,0 @@
-ssh_super_team:
-  #- { user: 'scanner', key: "{{ lookup('file', '{{ playbook_dir }}/public_keys/id_rsa_scanner.pub') }}", shell: '/bin/bash', pass: '12345678' }
-initial_scripts:
-  - { src: "{{ playbook_dir }}/deploy_scripts/create_user.sh", dest: "/root/create_user.sh" }
-  - { src: "{{ playbook_dir }}/deploy_scripts/hardening.sh", dest: "/root/hardening.sh" }
-
-

@@ -1,7 +1,7 @@
 - name: installing set of tools via apt
   become: true
   apt:
-    name: virtualbox
+    name: [virtualbox, git]
     state: present
     update_cache: true
 
@@ -12,9 +12,29 @@
       dest: "/opt/minikube"
     - url: "https://storage.googleapis.com/kubernetes-release/release/v1.16.8/bin/linux/amd64/kubectl"
       dest: "/opt/kubectl"
+    - url: "https://get.helm.sh/helm-v3.2.0-linux-amd64.tar.gz"
+      dest: "/opt/helm-v3.2.0-linux-amd64.tar.gz"
+
+- name: Unarchive a file that is already on the remote machine
+  unarchive:
+    src: /opt/helm-v3.2.0-linux-amd64.tar.gz
+    dest: /opt/
+    remote_src: yes
 
 - name: chmod binaries
   file: dest="/opt/{{ item }}" mode=0755
   with_items:
     - minikube
     - kubectl
+
+
+- name: move binaries
+  command: mv /opt/{{ item }} /usr/local/bin/{{ item }}
+  with_items:
+    - minikube
+    - kubectl
+
+- name: move binaries helm
+  command: mv /opt/linux-amd64/{{ item }} /usr/local/bin/{{ item }}
+  with_items:
+    - helm
