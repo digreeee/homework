@@ -1,0 +1,5 @@
+- hosts: minikube
+  roles:
+    - minikube
+  vars_files:
+    - "{{ playbook_dir }}/roles/main/variables/main.yml"
